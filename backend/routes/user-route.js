@@ -1,6 +1,7 @@
 const express = require('express');
 const { addUser, getUsers, getUserById, updateUser, deleteUser } = require('../handlers/userHandle');
 const router = express.Router();
+const authenticateJWT = require('../middleware/authMiddleware');
 
 
 
@@ -81,7 +82,7 @@ router.post("/users", async (req, res) => {
  */
 
 
-router.get("/users", async (req, res) => {
+router.get("/users",authenticateJWT, async (req, res) => {
     let users = await getUsers()
     res.send(users);
 
@@ -124,7 +125,7 @@ router.get("/users", async (req, res) => {
  *         description: User not found
  */
 
-router.get("/users/:id", async (req, res) => {
+router.get("/users/:id",authenticateJWT, async (req, res) => {
     console.log("id", req.params["id"])
     let user = await getUserById(req.params["id"]);
     res.send(user);
@@ -171,7 +172,7 @@ router.get("/users/:id", async (req, res) => {
  *         description: Invalid input
  */
 
-router.put("/users/:id", async (req, res) => {
+router.put("/users/:id",authenticateJWT, async (req, res) => {
     console.log("id", req.params["id"])
     await updateUser(req.params["id"], req.body);
     res.send({});
@@ -200,7 +201,7 @@ router.put("/users/:id", async (req, res) => {
  *         description: User not found
  */
 
-router.delete("/users/:id", async (req, res) => {
+router.delete("/users/:id",authenticateJWT, async (req, res) => {
     console.log("id", req.params["id"])
     await deleteUser(req.params["id"]);
     res.send({});

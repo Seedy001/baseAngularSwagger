@@ -10,7 +10,7 @@ async function addUser(userModel) {
 }
 async function getUsers() {
     const users = await User.find();
-    return users.map(user => user.toObject()); // Appel de la méthode toObject() correctement
+    return users.map(user => user.toObject()); 
 }
 
 async function getUserById(id) {

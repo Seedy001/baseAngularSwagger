@@ -10,6 +10,9 @@
   "description": "",
   "dependencies": {
     "express": "^4.20.0",
+    "jsonwebtoken": "^9.0.2",
+    "keycloak-angular": "^16.0.1",
+    "keycloak-js": "^25.0.5",
     "mongoose": "^8.6.1"
   }
 }
