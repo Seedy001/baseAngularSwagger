@@ -3,9 +3,10 @@ const app = express()
 const port = 3000;
 const mongoose = require('mongoose');
 const userRoutes = require("./routes/user-route");
-
+const authRoutes = require("./routes/auth-user-route")
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const cookieParser = require('cookie-parser');
 
 
 const swaggerOptions = {
@@ -20,7 +21,7 @@ const swaggerOptions = {
       {
         url: `http://localhost:${port}`,
       },
-    ],
+   ],
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -50,13 +51,21 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 var cors = require('cors');
 
 
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:4200', // Remplacez par l'URL de votre application Angular
+  credentials: true, // Permet d'envoyer des cookies
+};
+
+app.use(cors(corsOptions));
+app.use(cookieParser()); //décode les cookies envoyés par le client et les transforme en un objet JavaScript, accessible via req.cookies
+
 app.use(express.json())
 app.get('/', (req, res) => {
-  res.send('Hello World')
+  res.send('boulette server ')
 })
 
 app.use(userRoutes);
+app.use(authRoutes);
 
 async function connectDB(){
    await mongoose.connect('mongodb://localhost:27017',{
