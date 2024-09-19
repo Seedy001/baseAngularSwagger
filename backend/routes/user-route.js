@@ -82,7 +82,7 @@ router.post("/users", async (req, res) => {
  */
 
 
-router.get("/users",authenticateJWT, async (req, res) => {
+router.get("/users",authenticateJWT,async (req, res) => {
     let users = await getUsers()
     res.send(users);
 

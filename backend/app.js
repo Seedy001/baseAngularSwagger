@@ -37,7 +37,8 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ['./routes/user-route.js'], // Chemin vers vos fichiers de définition des routes
+  apis: ['./routes/user-route.js','./routes/auth-user-route.js'], // Chemin vers vos fichiers de définition des routes
+  
 };
 
 
@@ -52,11 +53,13 @@ var cors = require('cors');
 
 
 const corsOptions = {
-  origin: 'http://localhost:4200', // Remplacez par l'URL de votre application Angular
-  credentials: true, // Permet d'envoyer des cookies
+  origin: 'http://localhost:4200', // Remplace par l'URL de ton app Angular
+  credentials: true, // Pour permettre l'envoi de cookies
+  allowedHeaders: ['Content-Type', 'Authorization'], // Autoriser les en-têtes nécessaires
 };
 
 app.use(cors(corsOptions));
+
 app.use(cookieParser()); //décode les cookies envoyés par le client et les transforme en un objet JavaScript, accessible via req.cookies
 
 app.use(express.json())
